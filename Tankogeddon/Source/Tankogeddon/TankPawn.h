@@ -26,6 +26,11 @@ public:
 
 	void AlterFireStop();
 
+	void SetupCannon(TSubclassOf<ACannon> NewCannonClass);
+
+	void SwitchCannon();
+
+	void AddAmmo(uint8 Ammo);
 
 	virtual void Tick(float DeltaSeconds) override;
 
@@ -42,9 +47,18 @@ protected:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Components")
 	TSubclassOf<ACannon> CannonClass;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Components")
+	TSubclassOf<ACannon> ProjectileCannonClass;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Components")
+	TSubclassOf<ACannon> TraceCannonClass;
 	
 	UPROPERTY()
 	class ACannon * Cannon;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Components")
+	class UArrowComponent* CannonSetupPoint;
 	
 	UPROPERTY(VisibleDefaultsOnly, BlueprintReadWrite, Category = "Components")
 	class USpringArmComponent * SpringArm;
@@ -70,8 +84,7 @@ protected:
 	UPROPERTY()
 	class ATankController* TankController;
 
-	void SetupCannon();
-	
+
 private:
 	float ForwardAxisValue = 0.0f;
 	float CurrentForwardAxisValue = 0.0f;

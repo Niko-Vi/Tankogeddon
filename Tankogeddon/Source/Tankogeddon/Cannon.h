@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameStructs.h"
+#include "ProjectilePool.h"
 #include "GameFramework/Actor.h"
 #include "Cannon.generated.h"
 
@@ -26,7 +27,14 @@ public:
 
 	void MiniReload();
 
+	void DiscFire();
+
+	void AddAmmo(uint8 Ammo);
+
 	void Tick(float DeltaSeconds) override;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Components")
+	ECannonType CannonType;
 	
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
@@ -35,8 +43,17 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
 	class UArrowComponent* ProjectileSpawnPoint;
 	
+	//UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Components")
+	//ECannonType CannonType;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
+	class UProjectilePool* ProjectilePool;
+	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Components")
-	ECannonType CannonType;
+	TSubclassOf<class AProjectile> ProjectileClass;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Components")
+	TSubclassOf<class ADisc> DiscClass;
 
 	UPROPERTY(VisibleDefaultsOnly, BlueprintReadWrite, Category = "Ammo")
 	uint8 MaxAmmo = 50;
@@ -57,11 +74,25 @@ protected:
 	float TraceReloadDelay = 1.5f;
 
 	UPROPERTY(VisibleDefaultsOnly, BlueprintReadWrite, Category = "Ammo")
+	float DiscReloadDelay = 6.0f;
+
+	UPROPERTY(VisibleDefaultsOnly, BlueprintReadWrite, Category = "Ammo")
+	float DiscAutoDelay = 1.0f;
+
+	UPROPERTY(VisibleDefaultsOnly, BlueprintReadWrite, Category = "Ammo")
+	uint8 DiscOnFire = 0;
+	
+	UPROPERTY(VisibleDefaultsOnly, BlueprintReadWrite, Category = "Ammo")
 	float MiniDelay = 0.2f;
 	
-	FTimerHandle ReloadTimer;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Ammo")
+	float TraceLength = 3000.0f;
+	
+	FTimerHandle ReloadTimer;	
 
 	FTimerHandle MiniTimer;
+
+	FTimerHandle DiscAutoTimer;
 private:
 	bool bLoaded = true;
 	bool bMiniLoaded = true;

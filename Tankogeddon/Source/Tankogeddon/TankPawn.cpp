@@ -4,6 +4,7 @@
 #include "TankPawn.h"
 
 #include "Camera/CameraComponent.h"
+#include "Components/ArrowComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Kismet/KismetMathLibrary.h"
 
@@ -18,6 +19,9 @@ ATankPawn::ATankPawn()
 	
 	TurretMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("HeadMesh"));
 	TurretMesh->SetupAttachment(BodyMesh);
+
+	CannonSetupPoint = CreateDefaultSubobject<UArrowComponent>(TEXT("CannonSetupPoint"));
+	CannonSetupPoint->SetupAttachment(TurretMesh);
 
 	SpringArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("SpringArm"));
 	SpringArm->SetupAttachment(BodyMesh);
@@ -71,9 +75,9 @@ FVector ATankPawn::GetTurretPos()//used for debug line draw
 	return TurretMesh->GetComponentLocation();
 }
 
-void ATankPawn::SetupCannon()
+void ATankPawn::SetupCannon(TSubclassOf<ACannon> NewCannonClass)
 {
-	if(!CannonClass)
+	if(!NewCannonClass)
 	{
 		return;
 	}
@@ -85,9 +89,31 @@ void ATankPawn::SetupCannon()
 	params.Instigator = this;
 	params.Owner = this;
 
-	Cannon = GetWorld()->SpawnActor<ACannon>(CannonClass, params);
+	Cannon = GetWorld()->SpawnActor<ACannon>(NewCannonClass, params);
 
-	Cannon->AttachToComponent(TurretMesh, FAttachmentTransformRules::SnapToTargetIncludingScale);
+	Cannon->AttachToComponent(CannonSetupPoint, FAttachmentTransformRules::SnapToTargetIncludingScale);
+}
+
+void ATankPawn::SwitchCannon()
+{
+	if(Cannon->CannonType == ECannonType::FireProjectile)
+	{
+		CannonClass = TraceCannonClass;
+		SetupCannon(CannonClass);
+	}
+	else if(Cannon->CannonType == ECannonType::FireTrace)
+	{
+		CannonClass = ProjectileCannonClass;
+		SetupCannon(CannonClass);
+	}
+}
+
+void ATankPawn::AddAmmo(uint8 Ammo)
+{
+	if(Cannon)
+	{
+		Cannon->AddAmmo(Ammo);
+	}
 }
 
 
@@ -129,7 +155,7 @@ void ATankPawn::BeginPlay()
 
 	TankController = Cast<ATankController>(GetController());
 
-	SetupCannon();
+	SetupCannon(CannonClass);
 }
 
 

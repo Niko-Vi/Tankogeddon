@@ -19,6 +19,7 @@ void ATankController::SetupInputComponent()
 	InputComponent->BindAction("PrimaryFire", EInputEvent::IE_Pressed, this, &ATankController::Fire);
 	InputComponent->BindAction("AlternateFire", EInputEvent::IE_Pressed, this, &ATankController::AlterFire);
 	InputComponent->BindAction("AlternateFire", EInputEvent::IE_Released, this, &ATankController::AlterFireStop);
+	InputComponent->BindAction("SwitchCannon", EInputEvent::IE_Pressed, this, &ATankController::SwitchCannon);
 }
 
 FVector ATankController::GetMousePosition()
@@ -89,6 +90,14 @@ void ATankController::AlterFireStop()
 	if(TankPawn)
 	{
 		TankPawn->AlterFireStop();
+	}
+}
+
+void ATankController::SwitchCannon()
+{
+	if(TankPawn)
+	{
+		TankPawn->SwitchCannon();
 	}
 }
 

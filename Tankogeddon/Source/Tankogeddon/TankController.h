@@ -48,5 +48,8 @@ protected:
 	UFUNCTION()
 	void AlterFireStop();
 
+	UFUNCTION()
+	void SwitchCannon();
+
 };
 
