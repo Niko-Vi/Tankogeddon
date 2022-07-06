@@ -4,7 +4,6 @@
 #include "TankPawn.h"
 
 #include "Camera/CameraComponent.h"
-#include "Components/ArrowComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Kismet/KismetMathLibrary.h"
 
@@ -13,7 +12,7 @@ ATankPawn::ATankPawn()
 {
  	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-
+/*
 	BodyMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("BodyMesh"));
 	RootComponent = BodyMesh;
 	
@@ -22,7 +21,7 @@ ATankPawn::ATankPawn()
 
 	CannonSetupPoint = CreateDefaultSubobject<UArrowComponent>(TEXT("CannonSetupPoint"));
 	CannonSetupPoint->SetupAttachment(TurretMesh);
-
+*/
 	SpringArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("SpringArm"));
 	SpringArm->SetupAttachment(BodyMesh);
 	SpringArm->bDoCollisionTest = false;
@@ -46,13 +45,7 @@ void ATankPawn::TurnRight(float Value)
 	TurnRightAxisValue = Value;
 }
 
-void ATankPawn::Fire()
-{
-	if(Cannon)
-	{
-		Cannon->Fire();
-	}
-}
+
 
 void ATankPawn::AlterFire()
 {
@@ -70,12 +63,12 @@ void ATankPawn::AlterFireStop()
 	}
 }
 
-FVector ATankPawn::GetTurretPos()//used for debug line draw
+/*FVector ATankPawn::GetTurretPos() //used for debug line draw
 {
 	return TurretMesh->GetComponentLocation();
-}
+}*/
 
-void ATankPawn::SetupCannon(TSubclassOf<ACannon> NewCannonClass)
+/*void ATankPawn::SetupCannon(TSubclassOf<ACannon> NewCannonClass)
 {
 	if(!NewCannonClass)
 	{
@@ -92,7 +85,7 @@ void ATankPawn::SetupCannon(TSubclassOf<ACannon> NewCannonClass)
 	Cannon = GetWorld()->SpawnActor<ACannon>(NewCannonClass, params);
 
 	Cannon->AttachToComponent(CannonSetupPoint, FAttachmentTransformRules::SnapToTargetIncludingScale);
-}
+}*/
 
 void ATankPawn::SwitchCannon()
 {
@@ -155,7 +148,7 @@ void ATankPawn::BeginPlay()
 
 	TankController = Cast<ATankController>(GetController());
 
-	SetupCannon(CannonClass);
+	//SetupCannon(CannonClass);
 }
 
 

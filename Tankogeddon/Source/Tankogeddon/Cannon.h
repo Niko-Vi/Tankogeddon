@@ -33,6 +33,8 @@ public:
 
 	void Tick(float DeltaSeconds) override;
 
+	bool IsLoaded();
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Components")
 	ECannonType CannonType;
 	
@@ -87,6 +89,9 @@ protected:
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Ammo")
 	float TraceLength = 3000.0f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Ammo")
+	float TraceDamage = 5.0f;
 	
 	FTimerHandle ReloadTimer;	
 

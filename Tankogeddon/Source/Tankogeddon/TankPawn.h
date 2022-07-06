@@ -4,12 +4,13 @@
 
 #include "CoreMinimal.h"
 #include "Cannon.h"
+#include "MachinePawn.h"
 #include "TankController.h"
 #include "GameFramework/Pawn.h"
 #include "TankPawn.generated.h"
 
 UCLASS()
-class TANKOGEDDON_API ATankPawn : public APawn
+class TANKOGEDDON_API ATankPawn : public AMachinePawn
 {
 	GENERATED_BODY()
 
@@ -20,13 +21,13 @@ public:
 
 	void TurnRight(float Value);
 
-	void Fire();
+	//void Fire();
 
 	void AlterFire();
 
 	void AlterFireStop();
 
-	void SetupCannon(TSubclassOf<ACannon> NewCannonClass);
+	//void SetupCannon(TSubclassOf<ACannon> NewCannonClass);
 
 	void SwitchCannon();
 
@@ -39,27 +40,13 @@ public:
 	FVector GetTurretPos();
 	
 protected:
-	UPROPERTY(VisibleDefaultsOnly, BlueprintReadWrite, Category = "Components")
-	UStaticMeshComponent * BodyMesh;
 	
-	UPROPERTY(VisibleDefaultsOnly, BlueprintReadWrite, Category = "Components")
-	UStaticMeshComponent * TurretMesh;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Components")
-	TSubclassOf<ACannon> CannonClass;
-
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Components")
 	TSubclassOf<ACannon> ProjectileCannonClass;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Components")
 	TSubclassOf<ACannon> TraceCannonClass;
-	
-	UPROPERTY()
-	class ACannon * Cannon;
-	
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Components")
-	class UArrowComponent* CannonSetupPoint;
-	
+		
 	UPROPERTY(VisibleDefaultsOnly, BlueprintReadWrite, Category = "Components")
 	class USpringArmComponent * SpringArm;
 	

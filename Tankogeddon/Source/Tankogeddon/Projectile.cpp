@@ -3,6 +3,8 @@
 
 #include "Projectile.h"
 
+#include "DamageTaker.h"
+
 AProjectile::AProjectile()
 {
 	PrimaryActorTick.bCanEverTick = false;
@@ -31,7 +33,27 @@ void AProjectile::OnMeshOverlapBegin(class UPrimitiveComponent* OverlappedComp, 
 {
 	UE_LOG(LogTemp, Warning, TEXT("Projectile collided with %s, collided with component %s"), *OtherActor->GetName(), *OverlappedComp->GetName());
 
-	OtherActor->Destroy();
+	AActor* owner = GetOwner();
+	AActor* OwnerByOwner = (owner != nullptr) ? owner->GetOwner() : nullptr;
+	
+	if(OtherActor != owner && OtherActor != OwnerByOwner)
+	{
+		IDamageTaker* DamageTakerActor = Cast<IDamageTaker>(OtherActor);
+		if(DamageTakerActor)
+		{
+			FDamageData DamageData;
+			DamageData.DamageValue = Damage;
+			DamageData.Instigator = Owner;
+			DamageData.DamageMaker = this;
+
+			DamageTakerActor->TakeDamage(DamageData);
+		}
+		else
+		{
+			OtherActor->Destroy();
+		}
+	}
+	
 	Destroy();
 }
 

@@ -17,6 +17,22 @@ enum class ECannonType : uint8
 	FireDisc = 2 UMETA(DisplayName = "Use Disc")
 };
 
+USTRUCT()
+struct FDamageData
+{
+	GENERATED_BODY()
+
+	UPROPERTY()
+	float DamageValue;
+
+	UPROPERTY()
+	AActor* Instigator;
+
+	UPROPERTY()
+	AActor* DamageMaker;
+	
+};
+
 UCLASS()
 class TANKOGEDDON_API UGameStructs : public UObject
 {

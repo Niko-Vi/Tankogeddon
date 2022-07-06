@@ -3,3 +3,12 @@
 
 #include "ProjectilePool.h"
 
+UProjectilePool::UProjectilePool()
+{
+	
+	for(int i = 0 ; i < 5; ++i)
+	{
+		//AllCreatedMeshes[i] = new AProjectile; 
+		
+	}
+}

@@ -3,6 +3,7 @@
 
 #include "Cannon.h"
 
+#include "DamageTaker.h"
 #include "Disc.h"
 #include "Projectile.h"
 #include "Components/ArrowComponent.h"
@@ -73,7 +74,20 @@ void ACannon::Fire()
 			DrawDebugLine(GetWorld(), StartVector, HitResult.Location, FColor::Magenta, false, 0.6f, 0, 10);
 			if(HitResult.GetActor())
 			{
-				HitResult.GetActor()->Destroy();
+				IDamageTaker* DamageTakerActor = Cast<IDamageTaker>(HitResult.GetActor());
+				if (DamageTakerActor)
+				{
+					FDamageData damageData;
+					damageData.DamageValue = TraceDamage;
+					damageData.Instigator = this;
+					damageData.DamageMaker = this;
+
+					DamageTakerActor->TakeDamage(damageData);
+				}
+				else
+				{
+					HitResult.GetActor()->Destroy();
+				}
 			}
 		}
 		else
@@ -157,6 +171,11 @@ void ACannon::Tick(float DeltaSeconds)
 			GetWorld()->GetTimerManager().SetTimer(MiniTimer, this, &ACannon::MiniReload, MiniDelay, false);			
 		}		
 	}
+}
+
+bool ACannon::IsLoaded()
+{
+	return bLoaded;
 }
 
 
