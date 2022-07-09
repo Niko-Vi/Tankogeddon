@@ -24,7 +24,7 @@ void ATankController::SetupInputComponent()
 
 FVector ATankController::GetMousePosition()
 {
-	return MousePos;
+		return MousePos;	
 }
 
 void ATankController::Tick(float DeltaSeconds)

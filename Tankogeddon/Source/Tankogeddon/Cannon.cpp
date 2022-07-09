@@ -3,10 +3,13 @@
 
 #include "Cannon.h"
 
+#include "ActorPool.h"
 #include "DamageTaker.h"
 #include "Disc.h"
 #include "Projectile.h"
 #include "Components/ArrowComponent.h"
+#include "Components/AudioComponent.h"
+#include "Particles/ParticleSystemComponent.h"
 
 
 ACannon::ACannon()
@@ -21,6 +24,10 @@ ACannon::ACannon()
 
 	ProjectileSpawnPoint = CreateDefaultSubobject<UArrowComponent>(TEXT("ProjectileSpawnPoint"));
 	ProjectileSpawnPoint->SetupAttachment(CannonMesh);
+
+	ShootEffect = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("ShootEffect"));
+	AudioShootEffect = CreateDefaultSubobject<UAudioComponent>(TEXT("AudioShootEffect"));
+
 
 }
 
@@ -43,9 +50,24 @@ void ACannon::Fire()
 
 	if(CannonType == ECannonType::FireProjectile)
 	{
+		if(!ProjectilePool)
+		{
+			return;
+		}
 		CurrentAmmo--;
+		if(ShootEffect)
+		{
+			ShootEffect->ActivateSystem();
+		}
+		if(AudioShootEffect)
+		{
+			AudioShootEffect->Play();
+		}
+	
+		
 		GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Cyan, FString::Printf(TEXT("Fire projectile. Ammo: %d"), CurrentAmmo));
-		AProjectile* Projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileClass, ProjectileSpawnPoint->GetComponentLocation(), ProjectileSpawnPoint->GetComponentRotation());
+		AProjectile* Projectile = Cast<AProjectile>(ProjectilePool->SpawnPooleableActor(ProjectileSpawnPoint->GetComponentLocation(), ProjectileSpawnPoint->GetComponentRotation()));
+		
 		if(Projectile)
 		{
 			Projectile->Start();
@@ -176,6 +198,44 @@ void ACannon::Tick(float DeltaSeconds)
 bool ACannon::IsLoaded()
 {
 	return bLoaded;
+}
+
+void ACannon::SetupPool()
+{
+	{
+		if(!ProjectilePoolClass)
+		{
+			return;
+		}
+		if(ProjectilePool)
+		{
+			ProjectilePool->Destroy();
+		}
+
+		ProjectilePool = GetWorld()->SpawnActor<AActorPool>(ProjectilePoolClass);
+
+		ProjectilePool->AttachToComponent(CannonMesh, FAttachmentTransformRules::SnapToTargetIncludingScale);
+	}
+}
+
+void ACannon::Destruct()
+{
+	if(ProjectilePool)
+	{
+		ProjectilePool->Destroy();
+	}
+	Destroy();
+}
+
+void ACannon::BeginPlay()
+{
+	Super::BeginPlay();
+	
+	if(CannonType == ECannonType::FireProjectile)
+	{
+		SetupPool();
+	}
+	
 }
 
 

@@ -31,7 +31,9 @@ ATankPawn::ATankPawn()
 
 	Camera = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
 	Camera->SetupAttachment(SpringArm);
-	
+
+	ShootForceEffect = CreateDefaultSubobject<UForceFeedbackEffect>(TEXT("ShootForceEffect"));
+	//ShootShakeEffect = CreateDefaultSubobject<UCameraShakePattern>>(TEXT("ShootCameraShakeEffect"));
 }
 
 
@@ -130,14 +132,13 @@ void ATankPawn::Tick(float DeltaSeconds)
 	SetActorRotation(NewRotation);
 
 	//Turret rotation
-	FVector MousePos = TankController->GetMousePosition();
+	if(TankController)
+	{
+		FVector MousePos = TankController->GetMousePosition();
 
-	FRotator TargetRotation = UKismetMathLibrary::FindLookAtRotation(GetActorLocation(), MousePos);
-	FRotator TurretRotation = TurretMesh->GetComponentRotation();
-	TargetRotation.Pitch = TurretRotation.Pitch;
-	TargetRotation.Roll = TurretRotation.Roll;
+		TurnTurretTo(MousePos);
+	}
 
-	TurretMesh->SetWorldRotation(FMath::Lerp(TurretRotation, TargetRotation, TurretTurnInterpolationKey));
 }
 
 void ATankPawn::BeginPlay()
@@ -151,5 +152,41 @@ void ATankPawn::BeginPlay()
 	//SetupCannon(CannonClass);
 }
 
+void ATankPawn::Fire()
+{
+	Super::Fire();
 
+	if(ShootForceEffect)
+	{
+		FForceFeedbackParameters shootForceParams;
+		shootForceParams.bLooping = false;
+		shootForceParams.Tag = "shootForceParams";
+
+		GetWorld()->GetFirstPlayerController()->ClientPlayForceFeedback(ShootForceEffect, shootForceParams);
+	}
+	if(ShootShakeEffect)
+	{
+		FCameraShakeStartParams CameraShakeStartParams;
+		CameraShakeStartParams.bIsRestarting = false;
+		ShootShakeEffect->StartShakePattern(CameraShakeStartParams);
+		
+	}
+}
+
+/*void ATankPawn::Die()
+{
+	//TurretMesh->DestroyComponent();
+	//DisableInput(this->TankController);
+}*/
+
+void ATankPawn::TurnTurretTo(FVector TargetPosition)
+{
+	FRotator targetRotation = UKismetMathLibrary::FindLookAtRotation(GetActorLocation(), TargetPosition);
+	FRotator turretRotation = TurretMesh->GetComponentRotation();
+
+	targetRotation.Pitch = turretRotation.Pitch;
+	targetRotation.Roll = turretRotation.Roll;
+
+	TurretMesh->SetWorldRotation(FMath::Lerp(turretRotation, targetRotation, TurretTurnInterpolationKey));
+}
 

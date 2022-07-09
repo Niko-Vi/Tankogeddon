@@ -4,6 +4,8 @@
 
 #include "HealthComponent.h"
 #include "Components/ArrowComponent.h"
+#include "Components/AudioComponent.h"
+#include "Particles/ParticleSystemComponent.h"
 
 
 AMachinePawn::AMachinePawn()
@@ -24,9 +26,14 @@ AMachinePawn::AMachinePawn()
 	HealthComponent->OnDie.AddUObject(this, &AMachinePawn::Destroyed);
 	HealthComponent->OnHealthChanged.AddUObject(this, &AMachinePawn::DamageTaken);
 
+	MachineDestroyEffect = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("DestroyEffect"));
+	MachineDestroySound = CreateDefaultSubobject<UAudioComponent>(TEXT("DestroySound"));
 }
 
-
+void AMachinePawn::TakeDamage(FDamageData DamageData)
+{
+	HealthComponent->TakeDamage(DamageData);
+}
 
 void AMachinePawn::BeginPlay()
 {
@@ -43,6 +50,15 @@ void AMachinePawn::Destroyed()
 	{
 		Cannon->Destroy();
 	}
+	if(MachineDestroyEffect)
+	{
+		MachineDestroyEffect->ActivateSystem();
+	}
+	if(MachineDestroySound)
+	{
+		MachineDestroySound->Play();
+	}
+	
 	Die();
 }
 
@@ -72,8 +88,8 @@ void AMachinePawn::SetupCannon(TSubclassOf<ACannon> NewCannonClass)
 		return;
 	}
 	if(Cannon)
-	{
-		Cannon->Destroy();
+	{		
+		Cannon->Destruct();
 	}
 	FActorSpawnParameters params;
 	params.Instigator = this;

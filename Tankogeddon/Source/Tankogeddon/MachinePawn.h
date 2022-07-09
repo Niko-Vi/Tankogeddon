@@ -3,11 +3,12 @@
 
 #include "CoreMinimal.h"
 #include "Cannon.h"
+#include "DamageTaker.h"
 #include "GameFramework/Pawn.h"
 #include "MachinePawn.generated.h"
 
 UCLASS()
-class TANKOGEDDON_API AMachinePawn : public APawn
+class TANKOGEDDON_API AMachinePawn : public APawn  , public IDamageTaker
 {
 	GENERATED_BODY()
 
@@ -23,7 +24,7 @@ public:
 
 	virtual void BeginPlay() override;
 
-
+	virtual void TakeDamage(FDamageData DamageData) override;
 
 protected:
 	
@@ -52,5 +53,13 @@ protected:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Components")
 	class UHealthComponent* HealthComponent;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Effects")
+	UParticleSystemComponent* MachineDestroyEffect;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Effects")
+	UAudioComponent* MachineDestroySound;
+
+	
 
 };

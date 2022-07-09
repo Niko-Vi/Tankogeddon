@@ -4,6 +4,7 @@
 #include "TurrelPawn.h"
 
 #include "HealthComponent.h"
+#include "Components/ArrowComponent.h"
 #include "Components/BoxComponent.h"
 #include "Kismet/KismetMathLibrary.h"
 
@@ -28,10 +29,7 @@ ATurrelPawn::ATurrelPawn()
 
 }
 
-void ATurrelPawn::TakeDamage(FDamageData DamageData)
-{
-	HealthComponent->TakeDamage(DamageData);
-}
+
 
 void ATurrelPawn::BeginPlay()
 {
@@ -87,6 +85,10 @@ bool ATurrelPawn::IsPlayerInRange()
 
 bool ATurrelPawn::CanFire() // check if turret looking at player
 {
+	if(!IsPlayerSeen())
+	{
+		return false;
+	}
 	//get current direction of turret
 	FVector TargetingDirection = TurretMesh->GetForwardVector();
 	//get and normalize direction to player
@@ -97,4 +99,32 @@ bool ATurrelPawn::CanFire() // check if turret looking at player
 	float AimAngle = FMath::RadiansToDegrees((acosf(FVector::DotProduct(TargetingDirection, DirectionToPlayer))));
 	//if angle not more than Accurency turret can fire
 	return AimAngle <= Accurency;
+}
+
+bool ATurrelPawn::IsPlayerSeen()
+{
+	FVector playerPosition = PlayerPawn->GetActorLocation();
+	FVector eyesPosition = CannonSetupPoint->GetComponentLocation();
+
+	FHitResult HitResult;
+
+	FCollisionQueryParams traceParams = FCollisionQueryParams(FName(TEXT("FireTrace")),
+		true, this);
+	traceParams.bTraceComplex = true;
+	traceParams.AddIgnoredActor(this);
+	traceParams.bReturnPhysicalMaterial = false;
+
+	if(GetWorld()->LineTraceSingleByChannel(HitResult, eyesPosition, playerPosition,
+		ECollisionChannel::ECC_Visibility, traceParams))
+	{
+		if(HitResult.GetActor())
+		{
+			DrawDebugLine(GetWorld(), eyesPosition, HitResult.Location, FColor::Red, false,
+				0.5f, 0, 10);
+			return  HitResult.GetActor() == PlayerPawn;
+		}
+	}
+	DrawDebugLine(GetWorld(), eyesPosition, playerPosition, FColor::Green, false,
+		0.5f, 0, 10);
+	return false;
 }

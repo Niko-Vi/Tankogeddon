@@ -2,11 +2,12 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "PoolableActor.h"
 #include "GameFramework/Actor.h"
 #include "Projectile.generated.h"
 
 UCLASS()
-class TANKOGEDDON_API AProjectile : public AActor
+class TANKOGEDDON_API AProjectile : public APoolableActor
 {
 	GENERATED_BODY()
 	

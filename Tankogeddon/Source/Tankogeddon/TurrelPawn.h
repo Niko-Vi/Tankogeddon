@@ -8,14 +8,14 @@
 
 
 UCLASS()
-class TANKOGEDDON_API ATurrelPawn : public AMachinePawn, public IDamageTaker
+class TANKOGEDDON_API ATurrelPawn : public AMachinePawn
 {
 	GENERATED_BODY()
 
 public:
 	ATurrelPawn();
 
-	virtual void TakeDamage(FDamageData DamageData) override;
+	
 	
 protected:
 
@@ -30,6 +30,8 @@ protected:
 	bool IsPlayerInRange();
 
 	bool CanFire();
+
+	bool IsPlayerSeen();
 
 	UPROPERTY()
 	class APawn* PlayerPawn;

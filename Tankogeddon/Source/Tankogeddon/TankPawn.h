@@ -37,7 +37,13 @@ public:
 
 	virtual void BeginPlay() override;
 
+	virtual void Fire() override;
+
+	//void Die() override;
+
 	FVector GetTurretPos();
+
+	void TurnTurretTo(FVector TargetPosition);
 	
 protected:
 	
@@ -70,6 +76,12 @@ protected:
 
 	UPROPERTY()
 	class ATankController* TankController;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Effects")
+	UForceFeedbackEffect* ShootForceEffect;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Effects")
+	UCameraShakePattern* ShootShakeEffect;
 
 
 private:

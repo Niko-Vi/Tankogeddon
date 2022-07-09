@@ -3,8 +3,8 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "ActorPool.h"
 #include "GameStructs.h"
-#include "ProjectilePool.h"
 #include "GameFramework/Actor.h"
 #include "Cannon.generated.h"
 
@@ -37,6 +37,10 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Components")
 	ECannonType CannonType;
+
+	void SetupPool();
+
+	void Destruct();
 	
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
@@ -48,14 +52,23 @@ protected:
 	//UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Components")
 	//ECannonType CannonType;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
-	class UProjectilePool* ProjectilePool;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Components")
+	TSubclassOf<AActorPool> ProjectilePoolClass;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Components")
+	AActorPool * ProjectilePool;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Components")
 	TSubclassOf<class AProjectile> ProjectileClass;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Components")
 	TSubclassOf<class ADisc> DiscClass;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Components")
+	UParticleSystemComponent* ShootEffect;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Components")
+	UAudioComponent* AudioShootEffect;
 
 	UPROPERTY(VisibleDefaultsOnly, BlueprintReadWrite, Category = "Ammo")
 	uint8 MaxAmmo = 50;
@@ -98,6 +111,10 @@ protected:
 	FTimerHandle MiniTimer;
 
 	FTimerHandle DiscAutoTimer;
+
+	virtual void BeginPlay() override;
+
+	
 private:
 	bool bLoaded = true;
 	bool bMiniLoaded = true;

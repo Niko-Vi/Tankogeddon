@@ -11,7 +11,8 @@
 			"AdditionalDependencies": [
 				"Engine",
 				"CoreUObject",
-				"GeometryFramework"
+				"GeometryFramework",
+				"AIModule"
 			]
 		}
 	],
