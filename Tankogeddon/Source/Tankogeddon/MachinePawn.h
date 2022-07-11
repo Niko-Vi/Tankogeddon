@@ -60,6 +60,7 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Effects")
 	UAudioComponent* MachineDestroySound;
 
-	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Effects")
+	UAudioComponent* DamageTakenSound;
 
 };

@@ -28,6 +28,7 @@ AMachinePawn::AMachinePawn()
 
 	MachineDestroyEffect = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("DestroyEffect"));
 	MachineDestroySound = CreateDefaultSubobject<UAudioComponent>(TEXT("DestroySound"));
+	DamageTakenSound = CreateDefaultSubobject<UAudioComponent>(TEXT("DamageTakenSound"));
 }
 
 void AMachinePawn::TakeDamage(FDamageData DamageData)
@@ -69,6 +70,10 @@ void AMachinePawn::Die()
 
 void AMachinePawn::DamageTaken(float DamageValue)
 {
+	if(DamageTakenSound)
+	{
+		DamageTakenSound->Play();
+	}
 	UE_LOG(LogTemp, Warning, TEXT("%s taken %f damage,  Health: %f"), *GetName(), DamageValue, HealthComponent->GetHealth());
 }
 
