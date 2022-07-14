@@ -10,11 +10,16 @@ UCLASS()
 class TANKOGEDDON_API AProjectile : public APoolableActor
 {
 	GENERATED_BODY()
+
+	DECLARE_EVENT_OneParam(AProjectile, FOnKill, int);
 	
 public:	
 	AProjectile();
 
 	void Start();
+
+	FOnKill GotKill;
+	
 protected:
 	UPROPERTY(VisibleDefaultsOnly, BlueprintReadWrite, Category = "Components")
 	class  UStaticMeshComponent* ProjectileMesh;

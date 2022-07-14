@@ -11,10 +11,7 @@
 ATurrelPawn::ATurrelPawn()
 {
 	PrimaryActorTick.bCanEverTick = false;
-
-	BoxComponent = CreateDefaultSubobject<UBoxComponent>(TEXT("BoxCollider"));
-	BoxComponent->SetupAttachment(BodyMesh);
-	
+		
 	UStaticMesh* BodyMeshTemp = LoadObject<UStaticMesh>(this, *BodyMeshPath);
 	if(BodyMeshTemp)
 	{

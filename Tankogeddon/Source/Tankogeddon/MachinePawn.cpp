@@ -5,6 +5,7 @@
 #include "HealthComponent.h"
 #include "Components/ArrowComponent.h"
 #include "Components/AudioComponent.h"
+#include "Components/BoxComponent.h"
 #include "Particles/ParticleSystemComponent.h"
 
 
@@ -19,9 +20,12 @@ AMachinePawn::AMachinePawn()
 	TurretMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("HeadMesh"));
 	TurretMesh->SetupAttachment(BodyMesh);
 
+	BoxComponent = CreateDefaultSubobject<UBoxComponent>(TEXT("BoxCollider"));
+	BoxComponent->SetupAttachment(BodyMesh);
+
 	CannonSetupPoint = CreateDefaultSubobject<UArrowComponent>(TEXT("CannonSetupPoint"));
 	CannonSetupPoint->SetupAttachment(TurretMesh);
-
+	
 	HealthComponent = CreateDefaultSubobject<UHealthComponent>(TEXT("HealthComponent"));
 	HealthComponent->OnDie.AddUObject(this, &AMachinePawn::Destroyed);
 	HealthComponent->OnHealthChanged.AddUObject(this, &AMachinePawn::DamageTaken);
@@ -34,6 +38,11 @@ AMachinePawn::AMachinePawn()
 void AMachinePawn::TakeDamage(FDamageData DamageData)
 {
 	HealthComponent->TakeDamage(DamageData);
+}
+
+int AMachinePawn::GetPoints()
+{
+	return ScoreValue;
 }
 
 void AMachinePawn::BeginPlay()
@@ -66,6 +75,12 @@ void AMachinePawn::Destroyed()
 void AMachinePawn::Die()
 {
 	Destroy();
+}
+
+void AMachinePawn::AddAndShowScore(int Value)
+{
+	CurrentScores += Value;
+	GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Cyan, FString::Printf(TEXT("Current score %d"), CurrentScores));
 }
 
 void AMachinePawn::DamageTaken(float DamageValue)
@@ -101,15 +116,12 @@ void AMachinePawn::SetupCannon(TSubclassOf<ACannon> NewCannonClass)
 	params.Owner = this;
 
 	Cannon = GetWorld()->SpawnActor<ACannon>(NewCannonClass, params);
+	Cannon->SetOwner(this);
+	Cannon->ScoreChanged.AddUObject(this, &AMachinePawn::AddAndShowScore);
 
 	Cannon->AttachToComponent(CannonSetupPoint, FAttachmentTransformRules::SnapToTargetIncludingScale);
 }
 
-void AMachinePawn::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-
-}
 
 
 

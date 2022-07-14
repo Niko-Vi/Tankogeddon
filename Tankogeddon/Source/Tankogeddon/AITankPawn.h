@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "TankPawn.h"
 #include "Components/ArrowComponent.h"
+#include "Engine/TargetPoint.h"
 #include "AITankPawn.generated.h"
 
 /**
@@ -17,10 +18,10 @@ class TANKOGEDDON_API AAITankPawn : public ATankPawn
 
 public:
 	UFUNCTION()
-	TArray<FVector> GetPatrolCheckpoints(){return PatrolCheckpoints;}
-	
+	TArray<FVector> GetPatrolCheckpoints();
+
 	UFUNCTION()
-	float GetAccurency() { return MovementAccurency;}
+	float GetAccurency() { return MovementAccurency; }
 
 	UFUNCTION()
 	FVector GetTurretForwardVector();
@@ -28,9 +29,11 @@ public:
 	UFUNCTION()
 	FVector GetEyesPosition();
 
+	UFUNCTION()
+	void SetPatrolCheckPoints(TArray<ATargetPoint*> NewPatrolPoints);
 protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI | Components", meta = (MakeEditWidget = true))
-	TArray<FVector> PatrolCheckpoints;
+	TArray<ATargetPoint*> PatrolCheckpoints;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI | Components")
 	float MovementAccurency = 30.0f;

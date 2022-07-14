@@ -8,22 +8,21 @@ void ATankAIController::BeginPlay()
 {
 	Super::BeginPlay();
 
-	AIPawn = Cast<AAITankPawn>(GetPawn());
-	PlayerPawn = GetWorld()->GetFirstPlayerController()->GetPawn();
-
-	FVector pawnLocation = AIPawn->GetActorLocation();
-	MovementAccurency = AIPawn->GetAccurency();
-	TArray<FVector> points = AIPawn->GetPatrolCheckpoints();
-	for(FVector point : points)
-	{
-		PatrolPath.Add(point + pawnLocation);
-	}
-	CurrentPatrolPointIndex = 0;
+	Initialize();
 }
 
 void ATankAIController::Tick(float DeltaSeconds)
 {
 	Super::Tick(DeltaSeconds);
+
+	if(!AIPawn)
+	{
+		Initialize();
+	}
+	if(!AIPawn)
+	{
+		return;
+	}
 
 	AIPawn->MoveForward(1);
 
@@ -118,6 +117,25 @@ void ATankAIController::Fire()
 	}
 }
 
+void ATankAIController::Initialize()
+{
+	AIPawn = Cast<AAITankPawn>(GetPawn());
+
+	if(!AIPawn)
+	{
+		return;
+	}
+	PlayerPawn = GetWorld()->GetFirstPlayerController()->GetPawn();
+
+	FVector pawnLocation = AIPawn->GetActorLocation();
+	MovementAccurency = AIPawn->GetAccurency();
+	TArray<FVector> points = AIPawn->GetPatrolCheckpoints();
+	for(FVector point : points)
+	{
+		PatrolPath.Add(point + pawnLocation);
+	}
+	CurrentPatrolPointIndex = 0;
+}
 
 
 bool ATankAIController::IsPlayerSeen()
@@ -133,16 +151,20 @@ bool ATankAIController::IsPlayerSeen()
 	traceParams.AddIgnoredActor(AIPawn);
 	traceParams.bReturnPhysicalMaterial = false;
 
-	if(GetWorld()->LineTraceSingleByChannel(HitResult, eyesPosition, playerPosition,
-		ECollisionChannel::ECC_Visibility, traceParams))
-	{
+	//if(GetWorld()->LineTraceSingleByChannel(HitResult, eyesPosition, playerPosition,
+	//	ECollisionChannel::ECC_Visibility, traceParams))
+	//{
+	GetWorld()->LineTraceSingleByChannel(HitResult, eyesPosition, playerPosition,
+		ECollisionChannel::ECC_Visibility, traceParams);
+	
 		if(HitResult.GetActor())
 		{
 			DrawDebugLine(GetWorld(), eyesPosition, HitResult.Location, FColor::Red, false,
 				0.5f, 0, 10);
+			
 			return  HitResult.GetActor() == PlayerPawn;
 		}
-	}
+	//}
 	DrawDebugLine(GetWorld(), eyesPosition, playerPosition, FColor::Green, false,
 		0.5f, 0, 10);
 	return false;

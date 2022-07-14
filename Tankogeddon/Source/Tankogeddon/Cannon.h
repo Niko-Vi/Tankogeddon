@@ -12,6 +12,8 @@ UCLASS()
 class TANKOGEDDON_API ACannon : public AActor
 {
 	GENERATED_BODY()
+
+	DECLARE_EVENT_OneParam(ACannon, FChangeScore, int);
 	
 public:	
 	// Sets default values for this actor's properties
@@ -41,6 +43,15 @@ public:
 	void SetupPool();
 
 	void Destruct();
+
+	FVector GetEyesPosition();
+
+	UFUNCTION()
+	void AddScore(int Value);
+
+	FChangeScore ScoreChanged;
+
+	int Score = 0;
 	
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")

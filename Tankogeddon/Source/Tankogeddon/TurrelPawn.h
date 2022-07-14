@@ -35,9 +35,7 @@ protected:
 
 	UPROPERTY()
 	class APawn* PlayerPawn;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Components")
-	class UBoxComponent* BoxComponent;
+	
 		
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Targeting")
 	float TargetingRange = 2000.0f;

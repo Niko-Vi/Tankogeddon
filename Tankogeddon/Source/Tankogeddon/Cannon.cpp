@@ -227,6 +227,19 @@ void ACannon::Destruct()
 	Destroy();
 }
 
+FVector ACannon::GetEyesPosition()
+{
+	return ProjectileSpawnPoint->GetComponentLocation();
+}
+
+void ACannon::AddScore(int Value)
+{
+	if(ScoreChanged.IsBound())
+	{
+		ScoreChanged.Broadcast(Value);
+	}
+}
+
 void ACannon::BeginPlay()
 {
 	Super::BeginPlay();

@@ -4,6 +4,7 @@
 #include "Projectile.h"
 
 #include "DamageTaker.h"
+#include "Scorable.h"
 
 AProjectile::AProjectile()
 {
@@ -35,10 +36,21 @@ void AProjectile::OnMeshOverlapBegin(class UPrimitiveComponent* OverlappedComp, 
 
 	AActor* owner = GetOwner();
 	AActor* OwnerByOwner = (owner != nullptr) ? owner->GetOwner() : nullptr;
+
+	
 	
 	if(OtherActor != owner && OtherActor != OwnerByOwner)
 	{
+	
 		IDamageTaker* DamageTakerActor = Cast<IDamageTaker>(OtherActor);
+		IScorable* ScorableActor = Cast<IScorable>(OtherActor);
+		int Scores = 0;
+
+		if(ScorableActor)
+		{
+			Scores = ScorableActor->GetPoints();
+		}
+		
 		if(DamageTakerActor)
 		{
 			FDamageData DamageData;
@@ -47,6 +59,14 @@ void AProjectile::OnMeshOverlapBegin(class UPrimitiveComponent* OverlappedComp, 
 			DamageData.DamageMaker = this;
 
 			DamageTakerActor->TakeDamage(DamageData);
+
+			if(OtherActor->IsActorBeingDestroyed() && Scores != 0)
+			{
+				if(GotKill.IsBound())
+				{
+					GotKill.Broadcast(Scores);
+				}
+			}
 		}
 		else
 		{
