@@ -61,7 +61,7 @@ void ATankFactory::Die()
 	{
 		MapLoader->Activate(true);
 	}
-	FactoryDestroyEffect->Activate();
+	FactoryDestroyEffect->ActivateSystem();
 	FactoryDestroySound->Play();
 	BuildingMesh->SetHiddenInGame(true);
 	ScrapMesh->SetHiddenInGame(false);

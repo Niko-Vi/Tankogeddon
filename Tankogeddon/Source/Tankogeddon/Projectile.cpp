@@ -41,8 +41,8 @@ void AProjectile::OnMeshOverlapBegin(class UPrimitiveComponent* OverlappedComp, 
 	
 	if(OtherActor != owner && OtherActor != OwnerByOwner)
 	{
-	
-		IDamageTaker* DamageTakerActor = Cast<IDamageTaker>(OtherActor);
+		Explode();
+		/*IDamageTaker* DamageTakerActor = Cast<IDamageTaker>(OtherActor);
 		IScorable* ScorableActor = Cast<IScorable>(OtherActor);
 		int Scores = 0;
 
@@ -70,12 +70,112 @@ void AProjectile::OnMeshOverlapBegin(class UPrimitiveComponent* OverlappedComp, 
 		}
 		else
 		{
-			OtherActor->Destroy();
-		}
+			UPrimitiveComponent* mesh = Cast<UPrimitiveComponent>(OtherActor->GetRootComponent());
+			if (mesh)
+			{
+				if (mesh->IsSimulatingPhysics())
+				{
+					FVector forceVector = OtherActor->GetActorLocation() - GetActorLocation();
+					forceVector.Normalize();
+					//mesh->AddImpulse(forceVector * PushForce, NAME_None, true);
+					mesh->AddForce(forceVector * PushForce);
+				}
+			}
+			else
+			{
+				UE_LOG(LogTemp, Warning, TEXT("Mesh is not vallid"));
+			}
+			//OtherActor->Destroy();
+		}*/
 	}
 	
 	Deactivate();
 }
 
+void AProjectile::Explode()
+{
+	if(!bExplosive)
+	{
+		return;
+	}
+	
+	FVector startPos = GetActorLocation();
+	FVector endPos = startPos + FVector(0.1f);
+
+	FCollisionShape Shape = FCollisionShape::MakeSphere(ExplodeRadius);
+	FCollisionQueryParams params = FCollisionQueryParams::DefaultQueryParam;
+	params.AddIgnoredActor(this);
+	params.bTraceComplex = true;
+	params.TraceTag = "Explode trace";
+
+	TArray<FHitResult> AttachHit;
+
+	FQuat Rotation = FQuat::Identity;
+
+	bool bSweepResult = GetWorld()->SweepMultiByChannel(AttachHit,
+		startPos,
+		endPos,
+		Rotation,
+		ECollisionChannel::ECC_Visibility,
+		Shape,
+		params);
+	DrawDebugSphere(GetWorld(), startPos, ExplodeRadius, 5, FColor::Magenta, false, 2.0f);
+
+	if(bSweepResult)
+	{
+		for (FHitResult hitResult : AttachHit)
+		{
+			AActor* OtherActor = hitResult.GetActor();
+			if(!OtherActor)
+			{
+				continue;
+			}
+			MakeThings(OtherActor);
+		}
+	}
+}
+
+void AProjectile::MakeThings(AActor* OtherActor)
+{
+	IDamageTaker* damageTakerActor = Cast<IDamageTaker>(OtherActor);
+	if(damageTakerActor)
+	{
+		IScorable* ScorableActor = Cast<IScorable>(OtherActor);
+		int Scores = 0;
+
+		if(ScorableActor)
+		{
+			Scores = ScorableActor->GetPoints();
+		}
+		FDamageData damageData;
+		damageData.DamageValue = Damage;
+		damageData.Instigator = GetOwner();
+		damageData.DamageMaker = this;
+
+		damageTakerActor->TakeDamage(damageData);
+
+		if(OtherActor->IsActorBeingDestroyed() && Scores != 0)
+		{
+			if(GotKill.IsBound())
+			{
+				GotKill.Broadcast(Scores);
+			}
+		}
+				
+	}
+	else
+	{
+		UPrimitiveComponent* mesh = Cast<UPrimitiveComponent>(OtherActor->GetRootComponent());
+		if(mesh)
+		{
+			if(mesh->IsSimulatingPhysics())
+			{
+				FVector forceVector = OtherActor->GetActorLocation() - GetActorLocation();
+				forceVector.Normalize();
+				mesh->AddImpulse(forceVector * PushForce, NAME_None, true);
+			}
+		}
+	}
+}
 
 

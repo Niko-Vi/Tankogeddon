@@ -16,7 +16,7 @@ class TANKOGEDDON_API AProjectile : public APoolableActor
 public:	
 	AProjectile();
 
-	void Start();
+	virtual void Start();
 
 	FOnKill GotKill;
 	
@@ -33,9 +33,22 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Components")
 	float Damage = 10.0f;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Components")
+	float PushForce = 1000.0f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Damage")
+	float ExplodeRadius = 50.0f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Damage")
+	bool bExplosive = true;
+
+	void Explode();
+
+	void MakeThings(AActor* OtherActor);
+
 	FTimerHandle MoveTimer;
 
-	void Move();
+	virtual void Move();
 
 	UFUNCTION()
 	void OnMeshOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, 
