@@ -4,8 +4,10 @@
 #include "TankPawn.h"
 
 #include "Camera/CameraComponent.h"
+#include "Components/AudioComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Kismet/KismetMathLibrary.h"
+#include "Particles/ParticleSystemComponent.h"
 
 // Sets default values
 ATankPawn::ATankPawn()
@@ -101,6 +103,11 @@ void ATankPawn::SwitchCannon()
 		CannonClass = ProjectileCannonClass;
 		SetupCannon(CannonClass);
 	}
+	else
+	{
+		CannonClass = ProjectileCannonClass;
+		SetupCannon(CannonClass);
+	}
 }
 
 void ATankPawn::AddAmmo(uint8 Ammo)
@@ -114,31 +121,34 @@ void ATankPawn::AddAmmo(uint8 Ammo)
 
 void ATankPawn::Tick(float DeltaSeconds)
 {
-	Super::Tick(DeltaSeconds);
+	
+		Super::Tick(DeltaSeconds);
 
-	//Tank movement
-	FVector CurrentLocation = GetActorLocation();
-	FVector ForwardVector = GetActorForwardVector();
-	CurrentForwardAxisValue = FMath::Lerp(CurrentForwardAxisValue, ForwardAxisValue, ForwardInterpolationKey);
-	FVector MovePosition = CurrentLocation + MoveSpeed * ForwardVector * CurrentForwardAxisValue;
-	SetActorLocation(MovePosition, true);
-
-	//Tank rotation
-	CurrentTurnRightAxisValue = FMath::Lerp(CurrentTurnRightAxisValue, TurnRightAxisValue, TurnInterpolationKey);
-	float YawRotation = TurnSpeed * CurrentTurnRightAxisValue * DeltaSeconds;
-	FRotator CurrentRotation = GetActorRotation();	
-	YawRotation += CurrentRotation.Yaw;
-	FRotator NewRotation = FRotator(0.0f, YawRotation,0.0f);
-	SetActorRotation(NewRotation);
-
-	//Turret rotation
-	if(TankController)
+	if(!bDead)
 	{
-		FVector MousePos = TankController->GetMousePosition();
+		//Tank movement
+		FVector CurrentLocation = GetActorLocation();
+		FVector ForwardVector = GetActorForwardVector();
+		CurrentForwardAxisValue = FMath::Lerp(CurrentForwardAxisValue, ForwardAxisValue, ForwardInterpolationKey);
+		FVector MovePosition = CurrentLocation + MoveSpeed * ForwardVector * CurrentForwardAxisValue;
+		SetActorLocation(MovePosition, true);
 
-		TurnTurretTo(MousePos);
+		//Tank rotation
+		CurrentTurnRightAxisValue = FMath::Lerp(CurrentTurnRightAxisValue, TurnRightAxisValue, TurnInterpolationKey);
+		float YawRotation = TurnSpeed * CurrentTurnRightAxisValue * DeltaSeconds;
+		FRotator CurrentRotation = GetActorRotation();	
+		YawRotation += CurrentRotation.Yaw;
+		FRotator NewRotation = FRotator(0.0f, YawRotation,0.0f);
+		SetActorRotation(NewRotation);
+
+		//Turret rotation
+		if(TankController)
+		{
+			FVector MousePos = TankController->GetMousePosition();
+
+			TurnTurretTo(MousePos);
+		}
 	}
-
 }
 
 void ATankPawn::BeginPlay()
@@ -175,9 +185,26 @@ void ATankPawn::Fire()
 
 /*void ATankPawn::Die()
 {
-	//TurretMesh->DestroyComponent();
-	//DisableInput(this->TankController);
+	bDead = true;
+	if(Cannon)
+		Cannon->Destroy();
+	//if(TurretMesh)
+	//	TurretMesh->DestroyComponent();
+	DisableInput(this->TankController);	
 }*/
+
+void ATankPawn::Destroyed()
+{
+	if(MachineDestroyEffect)
+		MachineDestroyEffect->ActivateSystem();
+	if(MachineDestroySound)
+		 MachineDestroySound->Play();
+	
+	bDead = true;
+	if(Cannon)
+		Cannon->Destroy();
+	
+}
 
 void ATankPawn::TurnTurretTo(FVector TargetPosition)
 {

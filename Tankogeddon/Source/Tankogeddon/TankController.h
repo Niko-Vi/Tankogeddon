@@ -30,6 +30,14 @@ public:
 	virtual void Tick(float DeltaSeconds) override;
 	
 	virtual void SetPawn(APawn* InPawn) override;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "State")
+	bool bDead = false;
+
+	UFUNCTION(BlueprintCallable)
+	bool isDead();
+
+
 	
 protected:
 

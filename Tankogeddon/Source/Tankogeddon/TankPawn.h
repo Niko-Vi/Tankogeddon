@@ -6,7 +6,6 @@
 #include "Cannon.h"
 #include "MachinePawn.h"
 #include "TankController.h"
-#include "GameFramework/Pawn.h"
 #include "TankPawn.generated.h"
 
 UCLASS()
@@ -39,11 +38,16 @@ public:
 
 	virtual void Fire() override;
 
-	//void Die() override;
+	//virtual void Die() override;
+
+	virtual void Destroyed() override;
 
 	FVector GetTurretPos();
 
 	void TurnTurretTo(FVector TargetPosition);
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "State")
+	bool bDead = false;
 	
 protected:
 	
@@ -83,6 +87,7 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Effects")
 	UCameraShakePattern* ShootShakeEffect;
 
+	
 
 private:
 	float ForwardAxisValue = 0.0f;

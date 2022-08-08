@@ -70,6 +70,8 @@ void ACannon::Fire()
 		
 		if(Projectile)
 		{
+			Projectile->GotKill.AddUObject(this, &ACannon::AddScore);
+			Projectile->SetOwner(this);
 			Projectile->Start();
 		}
 		

@@ -29,18 +29,23 @@ FVector ATankController::GetMousePosition()
 
 void ATankController::Tick(float DeltaSeconds)
 {
-	Super::Tick(DeltaSeconds);
+	if(TankPawn)
+	{
+		Super::Tick(DeltaSeconds);
 
-	FVector MouseDirection;
-	DeprojectMousePositionToWorld(MousePos, MouseDirection);
-	FVector TankPos = TankPawn->GetActorLocation();
-	MousePos.Z = TankPos.Z;
+		if(TankPawn->bDead)
+			bDead = true;
+		
+		FVector MouseDirection;
+		DeprojectMousePositionToWorld(MousePos, MouseDirection);
+		FVector TankPos = TankPawn->GetActorLocation();
+		MousePos.Z = TankPos.Z;
 	
 
-	FVector Direction = MousePos - TankPos;
-	Direction.Normalize();
-	MousePos = TankPos + Direction * 1500.0f;
-
+		FVector Direction = MousePos - TankPos;
+		Direction.Normalize();
+		MousePos = TankPos + Direction * 1500.0f;
+	}
 	
 	//DrawDebugLine(GetWorld(), TankPawn->GetTurretPos(), MousePos, FColor::Cyan, false, 0.2f, 0, 5);
 }
@@ -51,6 +56,11 @@ void ATankController::SetPawn(APawn* InPawn)
 	Super::SetPawn(InPawn);
 
 	TankPawn = Cast<ATankPawn>(InPawn);
+}
+
+bool ATankController::isDead()
+{
+	return TankPawn->bDead;
 }
 
 void ATankController::MoveForward(float Value)
