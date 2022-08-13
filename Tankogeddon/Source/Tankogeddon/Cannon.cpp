@@ -242,6 +242,17 @@ void ACannon::AddScore(int Value)
 	}
 }
 
+FText ACannon::GetAmmoState()
+{	
+	FString state;
+
+	state = FString::FromInt(CurrentAmmo);
+	state += "/";
+	state += FString::FromInt(MaxAmmo);
+	
+	return FText::FromString(state);
+}
+
 void ACannon::BeginPlay()
 {
 	Super::BeginPlay();

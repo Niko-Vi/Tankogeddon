@@ -30,6 +30,10 @@ public:
 	UFUNCTION()
 	void AddAndShowScore(int Value);
 
+	UFUNCTION(BlueprintCallable)
+	float GetCurrentHealth();
+
+
 protected:
 	
 	virtual void Destroyed() override;

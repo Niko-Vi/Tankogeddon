@@ -52,6 +52,9 @@ public:
 	FChangeScore ScoreChanged;
 
 	int Score = 0;
+
+	UFUNCTION(BlueprintCallable)
+	FText GetAmmoState();
 	
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")

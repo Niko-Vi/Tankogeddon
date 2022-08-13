@@ -22,7 +22,10 @@ public:
 	
 	void TakeDamage(FDamageData DamageData);
 	float GetHealth() const;
+
+	UFUNCTION(BlueprintCallable)
 	float GetHealthState() const;
+	
 	void AddHealth(float AddHealthValue);
 
 protected:

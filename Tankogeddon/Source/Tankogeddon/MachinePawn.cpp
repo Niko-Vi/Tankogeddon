@@ -83,6 +83,17 @@ void AMachinePawn::AddAndShowScore(int Value)
 	GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Cyan, FString::Printf(TEXT("Current score %d"), CurrentScores));
 }
 
+float AMachinePawn::GetCurrentHealth()
+{
+	if(HealthComponent)
+	{
+		return HealthComponent->GetHealthState();
+	}
+	return 0;
+}
+
+
+
 void AMachinePawn::DamageTaken(float DamageValue)
 {
 	if(DamageTakenSound)
