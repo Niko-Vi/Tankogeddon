@@ -181,6 +181,15 @@ void ATankPawn::Fire()
 		ShootShakeEffect->StartShakePattern(CameraShakeStartParams);
 		
 	}
+
+	if(Cannon)
+	{
+		if(OnAmmoStateChanged.IsBound())
+		{
+			OnAmmoStateChanged.Broadcast(Cannon->GetAmmoState());
+		}
+	}
+	
 }
 
 /*void ATankPawn::Die()
@@ -215,5 +224,14 @@ void ATankPawn::TurnTurretTo(FVector TargetPosition)
 	targetRotation.Roll = turretRotation.Roll;
 
 	TurretMesh->SetWorldRotation(FMath::Lerp(turretRotation, targetRotation, TurretTurnInterpolationKey));
+}
+
+FText ATankPawn::GetAmmoState()
+{
+	if(Cannon)
+	{
+		return Cannon->GetAmmoState();
+	}
+	return FText::FromString("fail");
 }
 

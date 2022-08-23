@@ -26,7 +26,9 @@ ACannon::ACannon()
 	ProjectileSpawnPoint->SetupAttachment(CannonMesh);
 
 	ShootEffect = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("ShootEffect"));
+	ShootEffect->SetAutoActivate(false);
 	AudioShootEffect = CreateDefaultSubobject<UAudioComponent>(TEXT("AudioShootEffect"));
+	AudioShootEffect->SetAutoActivate(false);
 
 
 }
@@ -55,6 +57,7 @@ void ACannon::Fire()
 			return;
 		}
 		CurrentAmmo--;
+		
 		if(ShootEffect)
 		{
 			ShootEffect->ActivateSystem();

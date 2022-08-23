@@ -32,7 +32,9 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	float GetCurrentHealth();
-
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Components")
+	class UHealthComponent* HealthComponent;
 
 protected:
 	
@@ -62,8 +64,7 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Components")
 	class UArrowComponent* CannonSetupPoint;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Components")
-	class UHealthComponent* HealthComponent;
+	
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Scores")
 	int ScoreValue = 0;

@@ -29,6 +29,12 @@ float UHealthComponent::GetHealth() const
 	return CurrentHealth;
 }
 
+float UHealthComponent::GetMaxHealth() const
+{
+	return MaxHealth;
+}
+
+
 float UHealthComponent::GetHealthState() const
 {
 	return CurrentHealth / MaxHealth;

@@ -87,7 +87,7 @@ float AMachinePawn::GetCurrentHealth()
 {
 	if(HealthComponent)
 	{
-		return HealthComponent->GetHealthState();
+		return HealthComponent->GetMaxHealth();
 	}
 	return 0;
 }

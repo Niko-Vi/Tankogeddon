@@ -16,8 +16,9 @@ class TANKOGEDDON_API UHealthComponent : public UActorComponent
 	DECLARE_EVENT_OneParam(UHealthComponent, FOnHealthChanged, float);
 
 public:
-
+	
 	FOnDie OnDie;
+	
 	FOnHealthChanged OnHealthChanged;
 	
 	void TakeDamage(FDamageData DamageData);
@@ -25,6 +26,9 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	float GetHealthState() const;
+
+	UFUNCTION(BlueprintCallable)
+	float GetMaxHealth() const;
 	
 	void AddHealth(float AddHealthValue);
 

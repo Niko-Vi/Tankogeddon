@@ -2,7 +2,38 @@
 
 #include "ATankHUD.h"
 
+#include "HealthComponent.h"
+#include "TankController.h"
+#include "TankPawn.h"
 #include "Blueprint/UserWidget.h"
+
+
+
+
+void AATankHUD::BeginPlay()
+{
+	Super::BeginPlay();
+
+	APlayerController* PlayerController = GetWorld()->GetFirstPlayerController();
+	if(PlayerController)
+	{
+		ATankController* TankController = Cast<ATankController>(PlayerController);
+		if(TankController)
+		{
+			ATankPawn* TankPawn = TankController->TankPawn;
+
+			if(TankPawn)
+			{
+				TankPawn->HealthComponent->OnDie.AddUObject(this, &AATankHUD::SetDeathScreen);
+			}
+		}
+	}
+}
+
+void AATankHUD::SetDeathScreen()
+{
+	ShowWidget(EWidgetID::Widget_DeathScreen);
+}
 
 
 UUserWidget* AATankHUD::ShowWidget(const EWidgetID WidgetID, const int32 ZOrder)

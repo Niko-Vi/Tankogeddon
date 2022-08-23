@@ -13,6 +13,8 @@ class TANKOGEDDON_API ATankPawn : public AMachinePawn
 {
 	GENERATED_BODY()
 
+	DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnAmmoStateChanged, FText, ammoState);
+	
 public:	
 	ATankPawn();
 
@@ -49,7 +51,15 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "State")
 	bool bDead = false;
 	
+	UPROPERTY(BlueprintAssignable)
+	FOnAmmoStateChanged OnAmmoStateChanged;
+
+	UFUNCTION()
+	FText GetAmmoState();
+	
 protected:
+
+	
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Components")
 	TSubclassOf<ACannon> ProjectileCannonClass;

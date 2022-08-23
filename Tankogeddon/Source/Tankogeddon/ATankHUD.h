@@ -22,8 +22,11 @@ UCLASS()
 class TANKOGEDDON_API AATankHUD : public AHUD
 {
 	GENERATED_BODY()
+	
 
-public:	
+public:
+
+	virtual void BeginPlay() override;
 
 	UFUNCTION(BlueprintCallable)
 	UUserWidget* ShowWidget(const EWidgetID WidgetID, const int32 ZOrder = 0);
@@ -36,6 +39,8 @@ public:
 
 protected:
 
+	void SetDeathScreen();
+
 	UUserWidget* CreateWidgetByClass(const TSubclassOf<UUserWidget> WidgetClass, const int32 ZOrder = 0);
 
 	UPROPERTY(EditAnywhere)
@@ -43,5 +48,8 @@ protected:
 	
 	UPROPERTY()
 	UUserWidget* CurrentWidget;
-	
+
 };
+
+
+
