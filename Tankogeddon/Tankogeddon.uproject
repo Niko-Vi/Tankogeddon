@@ -13,7 +13,9 @@
 				"CoreUObject",
 				"GeometryFramework",
 				"AIModule",
-				"UMG"
+				"UMG",
+				"Slate",
+				"SlateCore"
 			]
 		}
 	],
