@@ -10,7 +10,9 @@ BEGIN_SLATE_FUNCTION_BUILD_OPTIMIZATION
 void SRadioButtonsWidget::Construct(const FArguments& InArgs)
 {
 	OnRadioButtonsChanged = InArgs._OnRadioButtonsChanged;
-
+	CheckBoxStyle = &InArgs._Style->CheckBoxStyle;
+	TextBlockStyle = &InArgs._Style->TextBlockStyle;
+	
 	if(InArgs._Count.IsSet())
 	{
 		Count = InArgs._Count.Get();
@@ -27,6 +29,7 @@ void SRadioButtonsWidget::Construct(const FArguments& InArgs)
 			.MaxSliderValue(10)
 			.MinSliderValue(3)
 			.Value(Count)
+			.Style(&InArgs._Style->SpinBoxStyle)
 			.OnValueChanged(this, &SRadioButtonsWidget::CountChanged)
 		
 		]
@@ -78,9 +81,11 @@ TSharedRef<SWidget> SRadioButtonsWidget::CreateCheckbox(int32 InIndex, FString I
 	return SNew(SCheckBox)
 	.IsChecked_Raw(this, &SRadioButtonsWidget::IsChecked, InIndex)
 	.OnCheckStateChanged_Raw(this, &SRadioButtonsWidget::OnCheckboxStateChanged, InIndex)
+	.Style(CheckBoxStyle)
 	[
 		SNew(STextBlock)
 		.Text(FText::FromString(InText))
+		.TextStyle(TextBlockStyle)
 	];
 }
 

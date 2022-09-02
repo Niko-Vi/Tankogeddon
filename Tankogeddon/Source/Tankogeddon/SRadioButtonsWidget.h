@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "TestSlateWidgetStyle.h"
 #include "Widgets/SCompoundWidget.h"
 #include "Widgets/Input/SSpinBox.h"
 
@@ -21,12 +22,15 @@ public:
 	SLATE_ATTRIBUTE(int32, Count);
 
 	SLATE_EVENT(FOnRadioButtonsChanged, OnRadioButtonsChanged);
+
+	SLATE_STYLE_ARGUMENT(FTestSlateStyle, Style);
 	
 	SLATE_END_ARGS()
 
 	/** Constructs this widget with InArgs */
 	void Construct(const FArguments& InArgs);
 
+	//UPROPERTY(BlueprintAssignable, Category = "RadioButtons | Event")
 	FOnRadioButtonsChanged OnRadioButtonsChanged;
 
 	virtual int32 OnPaint(
@@ -41,7 +45,7 @@ public:
 
 protected:
 
-	mutable  int32 CurrentVBoxSlots;
+	mutable  int32 CurrentVBoxSlots = 0;
 	
 	int32 Count = 3;
 
@@ -59,6 +63,9 @@ protected:
 
 	void OnCheckboxStateChanged(ECheckBoxState newState, int32 InIndex) const;
 
+	const FCheckBoxStyle* CheckBoxStyle = nullptr;
+
+	const FTextBlockStyle* TextBlockStyle = nullptr;
 	
 };
 
