@@ -11,6 +11,15 @@
 /**
  * 
  */
+
+UENUM()
+enum EColorTheme
+{
+	Classic,
+	Bloody,
+	Sky
+};
+
 UCLASS()
 class TANKOGEDDON_API UMainMenuWidget : public UUserWidget
 {
@@ -19,8 +28,10 @@ class TANKOGEDDON_API UMainMenuWidget : public UUserWidget
 public:
 
 	virtual void NativeConstruct() override;
+	
 
-	//virtual void ReleaseSlateResources(bool bReleaseChildren) override;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Style theme")
+	TEnumAsByte<EColorTheme> Theme;	
 
 	UPROPERTY(EditAnywhere, Category = "Appearance", Meta = (DisplayName=Style))
 	FTestSlateStyle WidgetStyle;
@@ -36,6 +47,5 @@ public:
 
 	UPROPERTY(meta = (BindWidget))
 	UButton* ExitButton;
-	
 	
 };

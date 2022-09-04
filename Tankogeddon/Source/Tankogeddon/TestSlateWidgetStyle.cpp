@@ -7,11 +7,40 @@
 
 FTestSlateStyle::FTestSlateStyle()
 {
+	//Checkbox settings
 	CheckBoxStyle = FCoreStyle::Get().GetWidgetStyle<FCheckBoxStyle>("RadioButton");
-	TextBlockStyle = FCoreStyle::Get().GetWidgetStyle<FTextBlockStyle>("NormalText");
-	SpinBoxStyle = FCoreStyle::Get().GetWidgetStyle<FSpinBoxStyle>("SpinBox");	
-
+	CheckBoxStyle.Padding = 1;
+	CheckBoxStyle.CheckedForeground = FSlateColor(FColor::Yellow);
+	
+	//Textblock settings
+	TextBlockStyle = FCoreStyle::Get().GetWidgetStyle<FTextBlockStyle>("NormalUnderlinedText"); // not working? 
+	TextBlockStyle.SetFontSize(20);
+	TextBlockStyle.ColorAndOpacity = FSlateColor(FColor::Yellow);
+	
+	//Spinbox settings
+	SpinBoxStyle = FCoreStyle::Get().GetWidgetStyle<FSpinBoxStyle>("SpinBox");
+	SpinBoxStyle.SetForegroundColor(FColor::Red);
+	
+	FSlateBrush Brush;
+	
+	Brush.TintColor = FSlateColor(FColor::Yellow);	
+	SpinBoxStyle.SetBackgroundBrush(Brush);
+	
+	SpinBoxStyle.ForegroundColor = 	FSlateColor(FColor::Green);
+	
+	Brush.TintColor = FSlateColor(FColor::Purple);	
+	SpinBoxStyle.HoveredFillBrush = Brush;
+	
+	SpinBoxStyle.InsetPadding = 10;
+	
+	Brush.TintColor = FSlateColor(FColor::Cyan);	
+	SpinBoxStyle.InactiveFillBrush = Brush;
+	
+	
+	//Button settings
 	ButtonStyle = FCoreStyle::Get().GetWidgetStyle<FButtonStyle>("Button");
+	ButtonStyle.Normal.TintColor = FSlateColor(FColor::Cyan);
+	ButtonStyle.Hovered.TintColor = FSlateColor(FColor::Blue);
 }
 
 FTestSlateStyle::~FTestSlateStyle()

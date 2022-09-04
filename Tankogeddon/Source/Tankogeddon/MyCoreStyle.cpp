@@ -9,13 +9,13 @@ TSharedPtr<ISlateStyle> FMyCoreStyle::StylePtr;
 
 TSharedPtr<ISlateStyle> CreateStyle()
 {
-	FString Path = FPaths::ProjectContentDir() / TEXT("/UI");
+	FString Path = "/Game/UI";
 
 	TSharedPtr<FSlateStyleSet> Style = FSlateGameResources::New(FName("MyCoreStyle"), Path, Path);
 
-	Style->Set("Red", FLinearColor::Red);
-	Style->Set("DefaultPadding", FMargin(10.f));
-	Style->Set("ButtonBackground", new IMAGE_BRUSH("ButtonBackground", FVector2D(200.f)));
+	//Style->Set("Red", FLinearColor::Red);
+	//Style->Set("DefaultPadding", FMargin(10.f));
+	//Style->Set("ButtonBackground", new IMAGE_BRUSH("ButtonBackground", FVector2D(200.f)));
 
 	return Style;
 }

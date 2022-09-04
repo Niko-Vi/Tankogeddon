@@ -1,5 +1,3 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
 
 #include "SRadioButtonsWidget.h"
 #include "SlateOptMacros.h"
@@ -31,7 +29,7 @@ void SRadioButtonsWidget::Construct(const FArguments& InArgs)
 			.Value(Count)
 			.Style(&InArgs._Style->SpinBoxStyle)
 			.OnValueChanged(this, &SRadioButtonsWidget::CountChanged)
-		
+					
 		]
 
 		+ SVerticalBox::Slot()

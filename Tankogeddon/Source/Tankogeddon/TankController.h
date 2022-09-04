@@ -16,6 +16,8 @@ class TANKOGEDDON_API ATankController : public APlayerController
 
 public:
 	ATankController();
+
+	FSimpleMulticastDelegate OnMouseButtonUp;
 	
 	virtual void SetupInputComponent() override;
 
@@ -37,6 +39,7 @@ public:
 	UFUNCTION(BlueprintCallable)
 	bool isDead();
 
+	virtual void BeginPlay() override;
 
 	
 protected:
@@ -58,6 +61,8 @@ protected:
 
 	UFUNCTION()
 	void SwitchCannon();
+
+	void OnLeftMouseButonUp();
 
 };
 

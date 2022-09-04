@@ -20,6 +20,8 @@ void ATankController::SetupInputComponent()
 	InputComponent->BindAction("AlternateFire", EInputEvent::IE_Pressed, this, &ATankController::AlterFire);
 	InputComponent->BindAction("AlternateFire", EInputEvent::IE_Released, this, &ATankController::AlterFireStop);
 	InputComponent->BindAction("SwitchCannon", EInputEvent::IE_Pressed, this, &ATankController::SwitchCannon);
+	InputComponent->BindKey(EKeys::LeftMouseButton, IE_Released, this, &ATankController::OnLeftMouseButonUp);
+	
 }
 
 FVector ATankController::GetMousePosition()
@@ -61,6 +63,13 @@ void ATankController::SetPawn(APawn* InPawn)
 bool ATankController::isDead()
 {
 	return TankPawn->bDead;
+}
+
+void ATankController::BeginPlay()
+{
+	Super::BeginPlay();
+
+	bEnableClickEvents = true;
 }
 
 void ATankController::MoveForward(float Value)
@@ -109,5 +118,14 @@ void ATankController::SwitchCannon()
 	{
 		TankPawn->SwitchCannon();
 	}
+}
+
+void ATankController::OnLeftMouseButonUp()
+{
+	if(OnMouseButtonUp.IsBound())
+	{
+		OnMouseButtonUp.Broadcast();
+	}
+	
 }
 
