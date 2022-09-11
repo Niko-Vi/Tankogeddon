@@ -1,18 +1,26 @@
 ﻿#pragma once
 #include "Engine/DataTable.h"
-#include "Inve"
+#include "InventoryData.generated.h"
 
 UENUM()
-enum EItemType
+enum class EItemType
 {
-	
+	IT_Weapon,
+	IT_Gold,
+	IT_Consumable	
 };
 
 UENUM()
-enum EItemRarity
+enum class EItemRarity
 {
-	
+	IR_Common,
+	IR_Rare,
+	IR_Epic	
 };
+
+class UInventoryCellWidget;
+
+DECLARE_MULTICAST_DELEGATE_TwoParams(FOnItemDrop, UInventoryCellWidget* /*from*/, UInventoryCellWidget* /*to*/)
 
 USTRUCT(BlueprintType)
 struct FInventoryItemInfo : public FTableRowBase
@@ -53,6 +61,9 @@ USTRUCT(BlueprintType)
 struct FInventorySlotInfo : public FTableRowBase
 {
 	GENERATED_BODY()
+
+	//UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	//int32 InventorySlotIndex;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	FName Id = NAME_None;

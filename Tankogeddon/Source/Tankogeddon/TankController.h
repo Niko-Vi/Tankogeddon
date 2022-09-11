@@ -62,6 +62,9 @@ protected:
 	UFUNCTION()
 	void SwitchCannon();
 
+	UFUNCTION()
+	void ChangeInventoryVisibility();
+
 	void OnLeftMouseButonUp();
 
 };

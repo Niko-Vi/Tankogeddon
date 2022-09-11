@@ -1,9 +1,9 @@
 ﻿#include "MyCoreStyle.h"
 
 #include "Slate/SlateGameResources.h"
-#include "Styling/SlateStyleMacros.h"
+//#include "Styling/SlateStyleMacros.h"
 
-#define IMAGE_BRUSH(RelativePath, ...) FSlateImageBrush(Style->RootToContentDir(RelativePath, TEXT(".png")), __VA_ARGS__)
+//#define IMAGE_BRUSH(RelativePath, ...) FSlateImageBrush(Style->RootToContentDir(RelativePath, TEXT(".png")), __VA_ARGS__)
 
 TSharedPtr<ISlateStyle> FMyCoreStyle::StylePtr;
 
@@ -20,7 +20,7 @@ TSharedPtr<ISlateStyle> CreateStyle()
 	return Style;
 }
 
-#undef IMAGE_BRUSH
+//#undef IMAGE_BRUSH
 
 void FMyCoreStyle::Initialize()
 {

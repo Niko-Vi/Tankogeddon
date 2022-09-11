@@ -4,10 +4,15 @@
 
 #include "CoreMinimal.h"
 #include "Cannon.h"
+#include "InventoryData.h"
 #include "MachinePawn.h"
 #include "TankController.h"
 #include "TankPawn.generated.h"
 
+
+class UDataTable;
+class UInventoryManagerComponent;
+class UInventoryComponent;
 UCLASS()
 class TANKOGEDDON_API ATankPawn : public AMachinePawn
 {
@@ -56,10 +61,20 @@ public:
 
 	UFUNCTION()
 	FText GetAmmoState();
+
+	UFUNCTION(BlueprintCallable)
+	void ChangeInventoryVisibility();
 	
 protected:
 
+	UPROPERTY(EditDefaultsOnly, Category = "Inventory")
+    UInventoryComponent * InventoryComponent;
 	
+    UPROPERTY(EditDefaultsOnly, Category = "Inventory")
+    UInventoryManagerComponent * InventoryManagerComponent;
+
+	UPROPERTY(EditAnywhere, Category = "Inventory")
+	UDataTable* CurrentInventoryItems;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Components")
 	TSubclassOf<ACannon> ProjectileCannonClass;

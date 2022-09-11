@@ -14,7 +14,8 @@ enum class EWidgetID : uint8
 {
 	Widget_MainMenu = 0,
 	Widget_InGameHUD = 1,
-	Widget_DeathScreen = 2
+	Widget_DeathScreen = 2,
+	Widget_Inventory = 3
 };
 
 

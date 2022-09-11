@@ -3,11 +3,15 @@
 
 #include "TankPawn.h"
 
+#include "InventoryComponent.h"
+#include "InventoryManagerComponent.h"
+
 #include "Camera/CameraComponent.h"
 #include "Components/AudioComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Kismet/KismetMathLibrary.h"
 #include "Particles/ParticleSystemComponent.h"
+
 
 // Sets default values
 ATankPawn::ATankPawn()
@@ -36,6 +40,11 @@ ATankPawn::ATankPawn()
 
 	ShootForceEffect = CreateDefaultSubobject<UForceFeedbackEffect>(TEXT("ShootForceEffect"));
 	//ShootShakeEffect = CreateDefaultSubobject<UCameraShakePattern>>(TEXT("ShootCameraShakeEffect"));
+
+	// inventory
+	InventoryComponent = CreateDefaultSubobject<UInventoryComponent>(TEXT("InventoryComponent"));
+	InventoryManagerComponent = CreateDefaultSubobject<UInventoryManagerComponent>(TEXT("InventoryManager"));
+	
 }
 
 
@@ -160,6 +169,25 @@ void ATankPawn::BeginPlay()
 	TankController = Cast<ATankController>(GetController());
 
 	//SetupCannon(CannonClass);
+
+	if(CurrentInventoryItems)
+	{
+		//auto Items = CurrentInventoryItems->GetRowMap();
+	    //
+		//TMap<int32, FInventorySlotInfo> indexedItems;
+		//int32 index = 0;
+		//FInventorySlotInfo info;
+		//
+		//for(auto item : Items)
+		//{			
+		//	info = Cast<FInventorySlotInfo>(item.Value);
+		//	indexedItems.Add(index, info);
+		//	index++;
+		//}
+		//InventoryComponent->SetInventory(indexedItems);
+	}
+	
+	InventoryManagerComponent->Init(InventoryComponent);
 }
 
 void ATankPawn::Fire()
@@ -233,5 +261,13 @@ FText ATankPawn::GetAmmoState()
 		return Cannon->GetAmmoState();
 	}
 	return FText::FromString("fail");
+}
+
+void ATankPawn::ChangeInventoryVisibility()
+{
+	if(InventoryManagerComponent)
+	{
+		InventoryManagerComponent->ChangeInventoryVisibility();
+	}
 }
 

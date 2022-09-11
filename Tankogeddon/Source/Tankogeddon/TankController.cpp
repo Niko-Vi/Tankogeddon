@@ -21,6 +21,7 @@ void ATankController::SetupInputComponent()
 	InputComponent->BindAction("AlternateFire", EInputEvent::IE_Released, this, &ATankController::AlterFireStop);
 	InputComponent->BindAction("SwitchCannon", EInputEvent::IE_Pressed, this, &ATankController::SwitchCannon);
 	InputComponent->BindKey(EKeys::LeftMouseButton, IE_Released, this, &ATankController::OnLeftMouseButonUp);
+	InputComponent->BindKey(EKeys::I, EInputEvent::IE_Pressed, this, &ATankController::ChangeInventoryVisibility);
 	
 }
 
@@ -117,6 +118,14 @@ void ATankController::SwitchCannon()
 	if(TankPawn)
 	{
 		TankPawn->SwitchCannon();
+	}
+}
+
+void ATankController::ChangeInventoryVisibility()
+{
+	if(TankPawn)
+	{
+		TankPawn->ChangeInventoryVisibility();
 	}
 }
 
