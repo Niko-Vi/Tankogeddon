@@ -5,7 +5,6 @@
 
 #include "InventoryComponent.h"
 #include "InventoryManagerComponent.h"
-
 #include "Camera/CameraComponent.h"
 #include "Components/AudioComponent.h"
 #include "GameFramework/SpringArmComponent.h"
@@ -172,19 +171,24 @@ void ATankPawn::BeginPlay()
 
 	if(CurrentInventoryItems)
 	{
-		//auto Items = CurrentInventoryItems->GetRowMap();
-	    //
-		//TMap<int32, FInventorySlotInfo> indexedItems;
-		//int32 index = 0;
-		//FInventorySlotInfo info;
-		//
-		//for(auto item : Items)
-		//{			
-		//	info = Cast<FInventorySlotInfo>(item.Value);
-		//	indexedItems.Add(index, info);
-		//	index++;
-		//}
-		//InventoryComponent->SetInventory(indexedItems);
+		/*
+		 * rows in table are indexes of inventory slots
+		 */
+		TMap<int32, FInventorySlotInfo> indexedItems;
+		TArray<FName> names = CurrentInventoryItems->GetRowNames();
+		FString convertible;
+		int32 index;
+		FInventorySlotInfo* info;
+
+		for(auto name : names)
+		{
+			convertible = name.ToString();
+			index = FCString::Atoi(*convertible);
+			info = CurrentInventoryItems->FindRow<FInventorySlotInfo>(name, "");
+			indexedItems.Add(index, *info);
+		}		
+		
+		InventoryComponent->SetInventory(indexedItems);
 	}
 	
 	InventoryManagerComponent->Init(InventoryComponent);
