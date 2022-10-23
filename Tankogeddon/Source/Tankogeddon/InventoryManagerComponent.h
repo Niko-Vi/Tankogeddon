@@ -2,6 +2,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "EquipInventoryComponent.h"
 #include "InventoryData.h"
 #include "InventoryWidget.h"
 #include "Components/ActorComponent.h"
@@ -21,6 +22,10 @@ public:
 	
 	void Init(UInventoryComponent* InventoryComponent);
 
+	void InitEquip(UEquipInventoryComponent* EquipInventoryComponent);
+
+	void InitEquip(UInventoryComponent* InventoryComponent);
+	
 	const FInventoryItemInfo* GetItemInfo(const FName& InID) const;
 
 	UFUNCTION(BlueprintCallable)
@@ -31,6 +36,9 @@ protected:
 	UPROPERTY()
 	UInventoryComponent* LocalInventoryComponent;
 
+	UPROPERTY()
+	UEquipInventoryComponent* EquipInventory;
+
 	UPROPERTY(EditAnywhere)
 	UDataTable* ItemsData;
 
@@ -39,9 +47,15 @@ protected:
 
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<UInventoryWidget> InventoryWidgetClass;
+
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<UInventoryWidget> EquipInventoryWidgetClass;
 	
 	UPROPERTY()
 	UInventoryWidget* InventoryWidget;
+
+	UPROPERTY()
+	UInventoryWidget* EquipInventoryWidget;
 	
 	void OnItemDropFunc(UInventoryCellWidget* From, UInventoryCellWidget* To);
 
@@ -49,17 +63,4 @@ protected:
 		
 };
 
-inline void UInventoryManagerComponent::ChangeInventoryVisibility()
-{
-		if(InventoryWidget)
-		{
-			if(InventoryWidget->IsVisible())
-			{
-				InventoryWidget->SetVisibility(ESlateVisibility::Hidden);
-			}
-			else
-			{
-				InventoryWidget->SetVisibility(ESlateVisibility::Visible);
-			}
-		}
-}
+

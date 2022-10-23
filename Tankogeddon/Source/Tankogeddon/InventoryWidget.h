@@ -3,7 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "InventoryCellWidget.h"
+#include "InventoryComponent.h"
 #include "InventoryData.h"
 #include "Blueprint/UserWidget.h"
 #include "InventoryWidget.generated.h"
@@ -28,6 +28,11 @@ public:
 
 	FOnItemDrop OnItemDrop;
 
+	UPROPERTY()
+	UInventoryComponent* ParentInventory;
+
+	virtual void NativeConstruct() override;
+
 protected:
 
 	UPROPERTY(EditDefaultsOnly)
@@ -36,16 +41,18 @@ protected:
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<UInventoryCellWidget> CellClass;
 
-	UPROPERTY(BlueprintReadOnly, meta=(BindWidget))
+	UPROPERTY(BlueprintReadOnly, meta=(BindWidgetOptional))
 	UUniformGridPanel* CellsPanel;
 
-	UPROPERTY(BlueprintReadOnly, meta=(BindWidget))
+	UPROPERTY(BlueprintReadOnly, meta=(BindWidgetOptional))
 	UInventoryCellWidget* GoldCell;
 
-	UPROPERTY()
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TArray<UInventoryCellWidget*> Cells;
 
 	UInventoryCellWidget* CreateCell();
 
 	void OnItemDropFunc(UInventoryCellWidget* From, UInventoryCellWidget* To);
+
+	void InitCell(UInventoryCellWidget* NewCell);
 };

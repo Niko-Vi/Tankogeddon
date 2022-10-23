@@ -5,7 +5,7 @@
 UENUM()
 enum class EItemType
 {
-	IT_Weapon,
+	IT_Equip,
 	IT_Gold,
 	IT_Consumable	
 };
@@ -16,6 +16,14 @@ enum class EItemRarity
 	IR_Common,
 	IR_Rare,
 	IR_Epic	
+};
+
+UENUM()
+enum class EEquipSLot
+{
+	ES_BackShield,
+	ES_Cannon,
+	ES_FunnyHat
 };
 
 class UInventoryCellWidget;
@@ -33,6 +41,9 @@ struct FInventoryItemInfo : public FTableRowBase
 	UPROPERTY(EditDefaultsOnly, Category = "General")
 	FText Name;
 
+	UPROPERTY(EditDefaultsOnly, Category = "Type")
+	EEquipSLot EquipSLot;
+	
 	UPROPERTY(EditDefaultsOnly, Category = "Type")
 	EItemType Type;
 	

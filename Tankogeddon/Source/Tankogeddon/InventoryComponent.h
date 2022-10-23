@@ -26,6 +26,8 @@ public:
 
 	void SetInventory(TMap<int32, FInventorySlotInfo>& NewInventory);
 
+	virtual int32 GetMaxItemAmount(int32 SlotIndex, const FInventoryItemInfo& InItem);
+	
 protected:
 
 	UPROPERTY(EditAnywhere)

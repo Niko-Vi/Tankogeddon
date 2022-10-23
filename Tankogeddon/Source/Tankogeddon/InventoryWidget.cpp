@@ -2,7 +2,7 @@
 
 
 #include "InventoryWidget.h"
-
+#include "InventoryCellWidget.h"
 #include "Components/UniformGridPanel.h"
 
 
@@ -68,14 +68,27 @@ bool UInventoryWidget::AddItem(const FInventorySlotInfo& InSlot, const FInventor
 	return false;
 }
 
+void UInventoryWidget::NativeConstruct()
+{
+	Super::NativeConstruct();
+
+	for(auto* Cell : Cells)
+	{
+		InitCell(Cell);
+	}
+}
+
 UInventoryCellWidget* UInventoryWidget::CreateCell()
 {
 	if(CellClass)
 	{
 		if(auto* Cell = CreateWidget<UInventoryCellWidget>(this, CellClass))
 		{
+			Cell->SetPadding(2);
 			Cells.Add(Cell);
-			Cell->OnItemDrop.AddUObject(this, &ThisClass::OnItemDropFunc);
+
+			InitCell(Cell);
+			
 			return Cell;
 		}
 	}
@@ -87,5 +100,14 @@ void UInventoryWidget::OnItemDropFunc(UInventoryCellWidget* From, UInventoryCell
 	if(OnItemDrop.IsBound())
 	{
 		OnItemDrop.Broadcast(From, To);
+	}
+}
+
+void UInventoryWidget::InitCell(UInventoryCellWidget* NewCell)
+{
+	if(NewCell)
+	{
+		NewCell->OnItemDrop.AddUObject(this, &ThisClass::OnItemDropFunc);
+		NewCell->ParentInventoryWidget = this;
 	}
 }

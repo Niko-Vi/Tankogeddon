@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Cannon.h"
+#include "EquipInventoryComponent.h"
 #include "InventoryData.h"
 #include "MachinePawn.h"
 #include "TankController.h"
@@ -67,6 +68,12 @@ public:
 	
 protected:
 
+	UPROPERTY(EditDefaultsOnly, Category = "Inventory")
+	UEquipInventoryComponent* EquipInventoryComponent;
+
+	UPROPERTY(EditAnywhere, Category = "Inventory")
+	UDataTable* EquipInventoryItems;
+	
 	UPROPERTY(EditDefaultsOnly, Category = "Inventory")
     UInventoryComponent * InventoryComponent;
 	

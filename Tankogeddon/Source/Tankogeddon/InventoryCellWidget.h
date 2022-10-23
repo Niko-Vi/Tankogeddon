@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "InventoryData.h"
+#include "InventoryWidget.h"
 #include "Blueprint/UserWidget.h"
 #include "InventoryCellWidget.generated.h"
 
@@ -29,9 +30,15 @@ public:
 
 	FORCEINLINE const FInventorySlotInfo& GetItem() const {return  Item;}
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	int32 IndexInInventory = INDEX_NONE;
 
 	FOnItemDrop OnItemDrop;
+
+	UPROPERTY()
+	UInventoryWidget* ParentInventoryWidget;
+
+	UInventoryComponent* GetParentInventory() const;
 
 
 protected:

@@ -187,7 +187,7 @@ void ATankPawn::BeginPlay()
 			info = CurrentInventoryItems->FindRow<FInventorySlotInfo>(name, "");
 			indexedItems.Add(index, *info);
 		}		
-		
+				
 		InventoryComponent->SetInventory(indexedItems);
 	}
 	
