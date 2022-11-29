@@ -1,11 +1,11 @@
 {
     "Version": "1.2",
     "Data": {
-        "Source": "c:\\dev\\ue5\\tankogeddon\\tankogeddon\\plugins\\developer\\riderlink\\source\\rd\\thirdparty\\clsocket\\src\\simplesocket.cpp",
+        "Source": "d:\\dev\\ue5\\tankogeddon\\tankogeddon\\plugins\\developer\\riderlink\\source\\rd\\thirdparty\\clsocket\\src\\simplesocket.cpp",
         "ProvidedModule": "",
         "Includes": [
-            "c:\\dev\\ue5\\tankogeddon\\tankogeddon\\plugins\\developer\\riderlink\\intermediate\\build\\win64\\unrealeditor\\development\\rd\\definitions.h",
-            "c:\\dev\\ue5\\tankogeddon\\tankogeddon\\plugins\\developer\\riderlink\\source\\rd\\thirdparty\\clsocket\\src\\simplesocket.h",
+            "d:\\dev\\ue5\\tankogeddon\\tankogeddon\\plugins\\developer\\riderlink\\intermediate\\build\\win64\\unrealeditor\\development\\rd\\definitions.h",
+            "d:\\dev\\ue5\\tankogeddon\\tankogeddon\\plugins\\developer\\riderlink\\source\\rd\\thirdparty\\clsocket\\src\\simplesocket.h",
             "c:\\program files (x86)\\windows kits\\10\\include\\10.0.22000.0\\ucrt\\sys\\stat.h",
             "c:\\program files (x86)\\windows kits\\10\\include\\10.0.22000.0\\ucrt\\corecrt.h",
             "c:\\program files\\microsoft visual studio\\2022\\community\\vc\\tools\\msvc\\14.32.31326\\include\\vcruntime.h",
@@ -149,12 +149,12 @@
             "c:\\program files (x86)\\windows kits\\10\\include\\10.0.22000.0\\um\\ws2tcpip.h",
             "c:\\program files (x86)\\windows kits\\10\\include\\10.0.22000.0\\shared\\ws2ipdef.h",
             "c:\\program files (x86)\\windows kits\\10\\include\\10.0.22000.0\\shared\\in6addr.h",
-            "c:\\dev\\ue5\\tankogeddon\\tankogeddon\\plugins\\developer\\riderlink\\source\\rd\\thirdparty\\clsocket\\src\\host.h",
+            "d:\\dev\\ue5\\tankogeddon\\tankogeddon\\plugins\\developer\\riderlink\\source\\rd\\thirdparty\\clsocket\\src\\host.h",
             "c:\\program files\\microsoft visual studio\\2022\\community\\vc\\tools\\msvc\\14.32.31326\\include\\cstdint",
             "c:\\program files\\microsoft visual studio\\2022\\community\\vc\\tools\\msvc\\14.32.31326\\include\\yvals_core.h",
             "c:\\program files\\microsoft visual studio\\2022\\community\\vc\\tools\\msvc\\14.32.31326\\include\\xkeycheck.h",
             "c:\\program files\\microsoft visual studio\\2022\\community\\vc\\tools\\msvc\\14.32.31326\\include\\stdint.h",
-            "c:\\dev\\ue5\\tankogeddon\\tankogeddon\\plugins\\developer\\riderlink\\source\\rd\\thirdparty\\clsocket\\src\\stattimer.h",
+            "d:\\dev\\ue5\\tankogeddon\\tankogeddon\\plugins\\developer\\riderlink\\source\\rd\\thirdparty\\clsocket\\src\\stattimer.h",
             "c:\\program files (x86)\\windows kits\\10\\include\\10.0.22000.0\\ucrt\\time.h",
             "c:\\program files (x86)\\windows kits\\10\\include\\10.0.22000.0\\ucrt\\corecrt_wtime.h"
         ],

@@ -1,0 +1,15 @@
+{
+    "Version": "1.2",
+    "Data": {
+        "Source": "d:\\dev\\ue5\\tankogeddon\\tankogeddon\\source\\tankogeddon\\physicscomponent.cpp",
+        "ProvidedModule": "",
+        "PCH": "d:\\dev\\ue5\\tankogeddon\\tankogeddon\\intermediate\\build\\win64\\tankogeddoneditor\\development\\engine\\sharedpch.engine.shadowerrors.h.pch",
+        "Includes": [
+            "d:\\dev\\ue5\\tankogeddon\\tankogeddon\\intermediate\\build\\win64\\unrealeditor\\development\\tankogeddon\\definitions.tankogeddon.h",
+            "d:\\dev\\ue5\\tankogeddon\\tankogeddon\\source\\tankogeddon\\physicscomponent.h",
+            "d:\\dev\\ue5\\tankogeddon\\tankogeddon\\intermediate\\build\\win64\\unrealeditor\\inc\\tankogeddon\\physicscomponent.generated.h"
+        ],
+        "ImportedModules": [],
+        "ImportedHeaderUnits": []
+    }
+}

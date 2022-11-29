@@ -1,0 +1,41 @@
+{
+    "Version": "1.2",
+    "Data": {
+        "Source": "d:\\dev\\ue5\\tankogeddon\\tankogeddon\\source\\tankogeddon\\physicsprojectile.cpp",
+        "ProvidedModule": "",
+        "PCH": "d:\\dev\\ue5\\tankogeddon\\tankogeddon\\intermediate\\build\\win64\\tankogeddoneditor\\development\\engine\\sharedpch.engine.shadowerrors.h.pch",
+        "Includes": [
+            "d:\\dev\\ue5\\tankogeddon\\tankogeddon\\intermediate\\build\\win64\\unrealeditor\\development\\tankogeddon\\definitions.tankogeddon.h",
+            "d:\\dev\\ue5\\tankogeddon\\tankogeddon\\source\\tankogeddon\\physicsprojectile.h",
+            "d:\\dev\\ue5\\tankogeddon\\tankogeddon\\source\\tankogeddon\\physicscomponent.h",
+            "d:\\dev\\ue5\\tankogeddon\\tankogeddon\\intermediate\\build\\win64\\unrealeditor\\inc\\tankogeddon\\physicscomponent.generated.h",
+            "d:\\dev\\ue5\\tankogeddon\\tankogeddon\\source\\tankogeddon\\projectile.h",
+            "d:\\dev\\ue5\\tankogeddon\\tankogeddon\\source\\tankogeddon\\poolableactor.h",
+            "d:\\dev\\ue5\\tankogeddon\\tankogeddon\\intermediate\\build\\win64\\unrealeditor\\inc\\tankogeddon\\poolableactor.generated.h",
+            "d:\\dev\\ue5\\tankogeddon\\tankogeddon\\intermediate\\build\\win64\\unrealeditor\\inc\\tankogeddon\\projectile.generated.h",
+            "d:\\dev\\ue5\\tankogeddon\\tankogeddon\\intermediate\\build\\win64\\unrealeditor\\inc\\tankogeddon\\physicsprojectile.generated.h",
+            "d:\\dev\\ue5\\tankogeddon\\tankogeddon\\source\\tankogeddon\\damagetaker.h",
+            "d:\\dev\\ue5\\tankogeddon\\tankogeddon\\source\\tankogeddon\\gamestructs.h",
+            "c:\\program files\\epic games\\ue_5.0\\engine\\source\\runtime\\coreuobject\\public\\uobject\\noexporttypes.h",
+            "c:\\program files\\epic games\\ue_5.0\\engine\\source\\runtime\\coreuobject\\public\\uobject\\propertyaccessutil.h",
+            "c:\\program files\\epic games\\ue_5.0\\engine\\source\\runtime\\core\\public\\math\\unitconversion.h",
+            "c:\\program files\\epic games\\ue_5.0\\engine\\source\\runtime\\core\\public\\math\\unitconversion.inl",
+            "c:\\program files\\epic games\\ue_5.0\\engine\\source\\runtime\\core\\public\\internationalization\\polyglottextdata.h",
+            "c:\\program files\\epic games\\ue_5.0\\engine\\source\\runtime\\coreuobject\\public\\assetregistry\\arfilter.h",
+            "d:\\dev\\ue5\\tankogeddon\\tankogeddon\\intermediate\\build\\win64\\unrealeditor\\inc\\tankogeddon\\gamestructs.generated.h",
+            "d:\\dev\\ue5\\tankogeddon\\tankogeddon\\intermediate\\build\\win64\\unrealeditor\\inc\\tankogeddon\\damagetaker.generated.h",
+            "c:\\program files\\epic games\\ue_5.0\\engine\\source\\runtime\\engine\\classes\\kismet\\kismetmathlibrary.h",
+            "c:\\program files\\epic games\\ue_5.0\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\engine\\kismetmathlibrary.generated.h",
+            "c:\\program files\\epic games\\ue_5.0\\engine\\source\\runtime\\engine\\classes\\kismet\\kismetmathlibrary.inl",
+            "c:\\program files\\epic games\\ue_5.0\\engine\\source\\runtime\\engine\\classes\\particles\\particlesystem.h",
+            "c:\\program files\\epic games\\ue_5.0\\engine\\source\\runtime\\engine\\classes\\particles\\particleperfstats.h",
+            "c:\\program files\\epic games\\ue_5.0\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\engine\\particlesystem.generated.h",
+            "c:\\program files\\epic games\\ue_5.0\\engine\\source\\runtime\\engine\\classes\\particles\\particlesystemcomponent.h",
+            "c:\\program files\\epic games\\ue_5.0\\engine\\source\\runtime\\engine\\classes\\particles\\emitter.h",
+            "c:\\program files\\epic games\\ue_5.0\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\engine\\emitter.generated.h",
+            "c:\\program files\\epic games\\ue_5.0\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\engine\\particlesystemcomponent.generated.h"
+        ],
+        "ImportedModules": [],
+        "ImportedHeaderUnits": []
+    }
+}

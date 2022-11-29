@@ -19,7 +19,7 @@ public class Tankogeddon : ModuleRules
 			"SlateCore"
 		});
 
-		PrivateDependencyModuleNames.AddRange(new string[] { "GeometryFramework" });
+		PrivateDependencyModuleNames.AddRange(new string[] { "GeometryFramework"});
 
 		// Uncomment if you are using Slate UI
 		// PrivateDependencyModuleNames.AddRange(new string[] { "Slate", "SlateCore" });
